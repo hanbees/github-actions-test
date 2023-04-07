@@ -1,0 +1,31 @@
+name: Create PR from dev to main
+
+on:
+  push:
+    branches:
+      - dev
+      
+jobs:
+  createPullRequest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Commit files
+        run: |
+            npm install
+            npm install -g token-transformer
+            npm run do
+            git config --global user.name 'hanbees'
+            git config --global user.email 'hanbee.seo@9sapiens.com'
+            git add .
+            git commit -m "Create new commit by github actions"
+            git push
+        env: 
+            GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      - name: Create Pull Request
+        run: gh pr create -B main -H dev --title '[Test] PR' --body 'Github actions 테스트' --reviewer hanbees
+        env:
+            GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
