@@ -1,4 +1,12 @@
 {
+  "sizing": {
+    "font": {
+      "scale": {
+        "value": 1.125,
+        "type": "sizing"
+      }
+    }
+  },
   "borderRadius": {
     "default": {
       "value": 20,
